@@ -1,6 +1,7 @@
 import styles from "./MissionCard.module.css";
 
-const MissionCard = ({ mission, index }) => {
+const MissionCard = ({ mission }) => {
+  console.log(mission.launch_landing);
   return (
     <div className={styles.missionCard}>
       <div className={styles.cardImageContainer}>
@@ -9,7 +10,7 @@ const MissionCard = ({ mission, index }) => {
         )}
       </div>
       <h4 style={{ color: "#21346C" }}>
-        {mission.mission_name} #{index + 1}
+        {mission.mission_name} #{mission.flight_number}
       </h4>
       <table>
         <tbody>
@@ -44,7 +45,7 @@ const MissionCard = ({ mission, index }) => {
             <td>
               <b>Successful Landing:</b>
             </td>
-            <td>{mission.land_success ? "Yes" : "No"}</td>
+            <td>{mission.launch_landing ? "Yes" : "No"}</td>
           </tr>
         </tbody>
       </table>

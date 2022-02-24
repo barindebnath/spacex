@@ -13,9 +13,9 @@ const getMissions = (successfulLaunch, successfulLanading, launchYear) => {
   const yearFilter = "&launch_year=" + launchYear;
 
   return fetch(
-    `https://api.spacexdata.com/v3/launches?limit=100${successfulLanading !== null && landFilter}${
-      successfulLaunch !== null && launchFilter
-    }${launchYear !== null && yearFilter}`
+    `https://api.spacexdata.com/v3/launches?limit=100${successfulLanading !== null ? landFilter : ""}${
+      successfulLaunch !== null ? launchFilter : ""
+    }${launchYear !== null ? yearFilter : ""}`
   )
     .then((data) => {
       return data.json();
@@ -94,7 +94,7 @@ const App = () => {
         <div className={styles.cardContainer}>
           {missions.length && !isLoading
             ? missions.map((mission, index) => {
-                return <MissionCard mission={mission} key={index} index={index} />;
+                return <MissionCard mission={mission} key={index} />;
               })
             : [...Array(20)].map((nan, idx) => {
                 return <div className={styles.loadingCard} key={idx}></div>;
