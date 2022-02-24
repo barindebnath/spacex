@@ -1,0 +1,47 @@
+.filterContainer {
+  flex: 1;
+  min-width: 15rem;
+  max-width: 25rem;
+  color: #fff;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.filter {
+  text-align: center;
+  border: 1px solid #fff;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  background-color: #21346c;
+  padding: 0 0.5rem 1rem;
+}
+
+.buttonContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: ". .";
+  grid-auto-rows: minmax(30px, auto);
+  gap: 1rem 1rem;
+}
+
+.button {
+  background-color: transparent;
+  border-radius: 0.3rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+}
+.button:hover,
+.activeButton {
+  background-color: #fff;
+  color: #000;
+}
+
+@media (max-width: 700px) {
+  .filterContainer {
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}

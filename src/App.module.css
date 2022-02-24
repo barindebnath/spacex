@@ -1,0 +1,45 @@
+.parentContainer {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 1rem 1rem;
+  background-color: #fff;
+  min-height: 1vh;
+}
+
+.container {
+  display: flex;
+}
+
+.cardContainer {
+  flex: 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  gap: 1rem 1rem;
+  grid-template-areas: ". . . .";
+}
+
+.loadingCard {
+  background-color: white;
+  min-height: 15rem;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .container {
+    display: block;
+  }
+
+  .cardContainer {
+    grid-template-columns: 1fr;
+    grid-template-areas: ".";
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1024px) {
+  .cardContainer {
+    flex: 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: ". .";
+  }
+}
