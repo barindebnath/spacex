@@ -101,6 +101,7 @@ const App = () => {
               })}
         </div>
       </div>
+      <h6 style={{ textAlign: "center" }}>Developed by: Barin Debnath</h6>
     </div>
   );
 };
