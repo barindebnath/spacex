@@ -3,20 +3,25 @@ import styles from "./App.module.css";
 import Filters from "./Filters";
 import MissionCard from "./MissionCard";
 
+const serialize = (obj) => {
+  var str = [];
+  for (var p in obj)
+    if (obj.hasOwnProperty(p) && obj[p] && obj[p] !== "null") {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+};
+
 const getMissions = (successfulLaunch, successfulLanading, launchYear) => {
-  localStorage.setItem("successfulLaunch", successfulLaunch === false ? "0" : successfulLaunch ? "1" : "");
-  localStorage.setItem("successfulLanading", successfulLanading === false ? "0" : successfulLanading ? "1" : "");
-  localStorage.setItem("launchYear", launchYear ? launchYear : "");
+  let queryParam = serialize({
+    land_success: successfulLanading,
+    launch_success: successfulLaunch,
+    launch_year: launchYear,
+  });
 
-  const landFilter = "&land_success=" + successfulLanading;
-  const launchFilter = "&launch_success=" + successfulLaunch;
-  const yearFilter = "&launch_year=" + launchYear;
+  window.history.pushState("", document.title, `/spacex${queryParam ? "?" + queryParam : ""}`);
 
-  return fetch(
-    `https://api.spacexdata.com/v3/launches?limit=100${successfulLanading !== null ? landFilter : ""}${
-      successfulLaunch !== null ? launchFilter : ""
-    }${launchYear !== null ? yearFilter : ""}`
-  )
+  return fetch(`https://api.spacexdata.com/v3/launches?limit=100${queryParam ? "&" + queryParam : ""}`)
     .then((data) => {
       return data.json();
     })
@@ -35,7 +40,7 @@ const App = () => {
   const [successfulLaunch, setSuccessfulLaunch] = useState(null);
   const [successfulLanading, setSuccessfulLanading] = useState(null);
   const [launchYear, setLaunchYear] = useState(null);
-  const launchYears = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
+  const launchYears = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
 
   const clearFilter = () => {
     setIsLoading(true);
@@ -48,6 +53,7 @@ const App = () => {
     });
   };
 
+  // on filter state update
   useEffect(() => {
     if (!isLoading) {
       setIsLoading(true);
@@ -58,26 +64,40 @@ const App = () => {
     }
   }, [successfulLaunch, successfulLanading, launchYear]);
 
+  // on page load
   useEffect(() => {
-    let launch = localStorage.getItem("successfulLaunch");
-    let landing = localStorage.getItem("successfulLanading");
-    let year = localStorage.getItem("launchYear");
-    launch = launch === "0" ? false : launch === "1" ? true : null;
-    landing = landing === "0" ? false : landing === "1" ? true : null;
-    year = typeof year === "string" && year.length > 0 ? parseInt(year) : null;
-    setSuccessfulLaunch(launch);
-    setSuccessfulLanading(landing);
-    setLaunchYear(year);
-    console.log(launch, landing, year);
-    getMissions(launch, landing, year).then((response) => {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+    const { land_success, launch_success, launch_year } = params;
+    setSuccessfulLaunch(launch_success);
+    setSuccessfulLanading(land_success);
+    setLaunchYear(launch_year);
+    console.log(land_success, launch_success, launch_year);
+    getMissions(launch_success, land_success, launch_year).then((response) => {
       Array.isArray(response) && response.length ? setMissions(response) : setMissions([]);
       setIsLoading(false);
     });
   }, []);
 
+  // forward and backward navigation
+  // useEffect(()=>{
+  //   window.onpopstate = function(e){
+  //     if(e.state){
+  //         document.getElementById("content").innerHTML = e.state.html;
+  //         document.title = e.state.pageTitle;
+  //     }
+  // };
+  // })
+
   return (
     <div className={styles.parentContainer}>
-      <h2 style={{ margin: 0, padding: "1rem 0", textAlign: "center" }}>SpaceX Launch Programs</h2>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h2 style={{ margin: 0, padding: "1rem 0", flex: "1" }}>SpaceX Launch Programs</h2>
+        <h2 style={{ margin: "auto" }} className={isLoading ? styles.rotate : ""}>
+          🚀
+        </h2>
+      </div>
       <div className={styles.container}>
         <Filters
           launchYears={launchYears}
@@ -97,7 +117,7 @@ const App = () => {
                 return <MissionCard mission={mission} key={index} />;
               })
             : [...Array(20)].map((nan, idx) => {
-                return <div className={styles.loadingCard} key={idx}></div>;
+                return <div className={[styles.skeletonBox, styles.loadingCard].join(" ")} key={idx}></div>;
               })}
         </div>
       </div>

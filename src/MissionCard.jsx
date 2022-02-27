@@ -1,7 +1,6 @@
 import styles from "./MissionCard.module.css";
 
 const MissionCard = ({ mission }) => {
-  console.log(mission.launch_landing);
   return (
     <div className={styles.missionCard}>
       <div className={styles.cardImageContainer}>

@@ -9,7 +9,7 @@
 
 .filter {
   text-align: center;
-  border: 1px solid #fff;
+  border: 1px solid #21346c;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   background-color: #21346c;
@@ -32,10 +32,19 @@
   font-weight: bold;
   color: #fff;
 }
-.button:hover,
-.activeButton {
+.button:hover {
+  background-color: #46588e;
+}
+
+.button.active {
   background-color: #fff;
   color: #000;
+}
+
+.button.disabled:hover {
+  background-color: transparent;
+  color: #fff;
+  cursor: default;
 }
 
 @media (max-width: 700px) {

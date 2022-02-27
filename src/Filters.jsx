@@ -18,7 +18,11 @@ const Filters = ({
         <div className={styles.buttonContainer}>
           {launchYears.map((year) => (
             <button
-              className={[styles.button, year === launchYear ? styles.activeButton : {}].join(" ")}
+              className={[
+                styles.button,
+                year === launchYear ? styles.active : "",
+                isLoading ? styles.disabled : "",
+              ].join(" ")}
               onClick={() => setLaunchYear(year)}
               key={year}
               disabled={isLoading}
@@ -33,14 +37,20 @@ const Filters = ({
         <h4>Successfull Launch</h4>
         <div className={styles.buttonContainer}>
           <button
-            className={[styles.button, successfulLaunch ? styles.activeButton : {}].join(" ")}
+            className={[styles.button, successfulLaunch ? styles.active : "", isLoading ? styles.disabled : ""].join(
+              " "
+            )}
             onClick={() => setSuccessfulLaunch(true)}
             disabled={isLoading}
           >
             True
           </button>
           <button
-            className={[styles.button, successfulLaunch === false ? styles.activeButton : {}].join(" ")}
+            className={[
+              styles.button,
+              successfulLaunch === false ? styles.active : "",
+              isLoading ? styles.disabled : "",
+            ].join(" ")}
             onClick={() => setSuccessfulLaunch(false)}
             disabled={isLoading}
           >
@@ -53,14 +63,20 @@ const Filters = ({
         <h4>Successfull Landing</h4>
         <div className={styles.buttonContainer}>
           <button
-            className={[styles.button, successfulLanading ? styles.activeButton : {}].join(" ")}
+            className={[styles.button, successfulLanading ? styles.active : "", isLoading ? styles.disabled : ""].join(
+              " "
+            )}
             onClick={() => setSuccessfulLanading(true)}
             disabled={isLoading}
           >
             True
           </button>
           <button
-            className={[styles.button, successfulLanading === false ? styles.activeButton : {}].join(" ")}
+            className={[
+              styles.button,
+              successfulLanading === false ? styles.active : "",
+              isLoading ? styles.disabled : "",
+            ].join(" ")}
             onClick={() => setSuccessfulLanading(false)}
             disabled={isLoading}
           >
@@ -71,7 +87,7 @@ const Filters = ({
 
       <div style={{ backgroundColor: "#21346c", textAlign: "center", borderRadius: ".5rem" }}>
         <button
-          className={styles.button}
+          className={[styles.button, isLoading ? styles.disabled : ""].join(" ")}
           onClick={clearFilter}
           style={{ padding: ".5rem", margin: ".5rem" }}
           disabled={isLoading}
