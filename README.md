@@ -16,7 +16,12 @@
 ## Using filters
 
 - Used useState hook to store filtering values.
+- Keept all 3 filtering objects in single useState to avoide multiple re-rendering of page.
 - Used separate useEffect hook to check change in the filering values and called get function acordingly.
+
+## API call on backward or forward navigation
+
+- Detect change in URL when user navigates backward or forward and call the get fucntion.
 
 ## Clear filter option
 

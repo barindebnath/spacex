@@ -1,16 +1,6 @@
 import styles from "./Filters.module.css";
 
-const Filters = ({
-  launchYears,
-  launchYear,
-  successfulLaunch,
-  successfulLanading,
-  setLaunchYear,
-  setSuccessfulLaunch,
-  setSuccessfulLanading,
-  isLoading,
-  clearFilter,
-}) => {
+const Filters = ({ filter, setFilter, launchYears, isLoading, clearFilter }) => {
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filter}>
@@ -20,10 +10,10 @@ const Filters = ({
             <button
               className={[
                 styles.button,
-                year === launchYear ? styles.active : "",
+                year === filter.year ? styles.active : "",
                 isLoading ? styles.disabled : "",
               ].join(" ")}
-              onClick={() => setLaunchYear(year)}
+              onClick={() => setFilter({ ...filter, year })}
               key={year}
               disabled={isLoading}
             >
@@ -37,10 +27,12 @@ const Filters = ({
         <h4>Successfull Launch</h4>
         <div className={styles.buttonContainer}>
           <button
-            className={[styles.button, successfulLaunch ? styles.active : "", isLoading ? styles.disabled : ""].join(
-              " "
-            )}
-            onClick={() => setSuccessfulLaunch(true)}
+            className={[
+              styles.button,
+              filter.successfulLaunch ? styles.active : "",
+              isLoading ? styles.disabled : "",
+            ].join(" ")}
+            onClick={() => setFilter({ ...filter, successfulLaunch: true })}
             disabled={isLoading}
           >
             True
@@ -48,10 +40,10 @@ const Filters = ({
           <button
             className={[
               styles.button,
-              successfulLaunch === false ? styles.active : "",
+              filter.successfulLaunch === false ? styles.active : "",
               isLoading ? styles.disabled : "",
             ].join(" ")}
-            onClick={() => setSuccessfulLaunch(false)}
+            onClick={() => setFilter({ ...filter, successfulLaunch: false })}
             disabled={isLoading}
           >
             False
@@ -63,10 +55,12 @@ const Filters = ({
         <h4>Successfull Landing</h4>
         <div className={styles.buttonContainer}>
           <button
-            className={[styles.button, successfulLanading ? styles.active : "", isLoading ? styles.disabled : ""].join(
-              " "
-            )}
-            onClick={() => setSuccessfulLanading(true)}
+            className={[
+              styles.button,
+              filter.successfulLand ? styles.active : "",
+              isLoading ? styles.disabled : "",
+            ].join(" ")}
+            onClick={() => setFilter({ ...filter, successfulLand: true })}
             disabled={isLoading}
           >
             True
@@ -74,10 +68,10 @@ const Filters = ({
           <button
             className={[
               styles.button,
-              successfulLanading === false ? styles.active : "",
+              filter.successfulLand === false ? styles.active : "",
               isLoading ? styles.disabled : "",
             ].join(" ")}
-            onClick={() => setSuccessfulLanading(false)}
+            onClick={() => setFilter({ ...filter, successfulLand: false })}
             disabled={isLoading}
           >
             False

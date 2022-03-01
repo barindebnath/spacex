@@ -44,7 +44,7 @@ const MissionCard = ({ mission }) => {
             <td>
               <b>Successful Landing:</b>
             </td>
-            <td>{mission.launch_landing ? "Yes" : "No"}</td>
+            <td>{mission.launch_land === undefined ? "Data not found" : mission.launch_land}</td>
           </tr>
         </tbody>
       </table>
